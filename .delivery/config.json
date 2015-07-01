@@ -4,5 +4,9 @@
     "name": "<your build cookbook name>",
     "path": "<relative path from project root>"
   },
-  "skip_phases": []
+  "skip_phases": [
+    "unit",
+    "lint",
+    "syntax"
+  ]
 }
