@@ -12,7 +12,6 @@
     "publish",
     "quality",
     "security",
-    "smoke",
-    "syntax"
+    "smoke"
   ]
 }
