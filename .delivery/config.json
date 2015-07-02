@@ -1,8 +1,18 @@
 {
   "version": "2",
   "build_cookbook": {
-    "name": "<your build cookbook name>",
-    "path": "<relative path from project root>"
+    "name": "delivery-truck",
+    "git": "https://github.com/opscode-cookbooks/delivery-truck.git",
+    "branch": "master"
   },
-  "skip_phases": []
+  "skip_phases": [
+    "deploy",
+    "functional",
+    "provision",
+    "publish",
+    "quality",
+    "security",
+    "smoke",
+    "syntax",
+  ]
 }
