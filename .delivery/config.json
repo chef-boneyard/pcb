@@ -12,6 +12,7 @@
     "publish",
     "quality",
     "security",
-    "smoke"
+    "smoke",
+    "unit"
   ]
 }
