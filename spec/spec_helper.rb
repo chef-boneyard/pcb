@@ -1,5 +1,4 @@
 require 'chefspec'
-require 'chefspec/berkshelf'
 require 'chef-dk/generator'
 
 ChefSpec::Coverage.start!
