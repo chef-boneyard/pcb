@@ -9,7 +9,6 @@ module PCB
       # look for ../../metadata.json or .rb
       return true if File.exist?('../../metadata.rb')
       return true if File.exist?('../../metadata.json')
-      return false
     end
   end
 end
