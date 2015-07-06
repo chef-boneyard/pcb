@@ -53,8 +53,7 @@ test/*
 features/*
 Guardfile
 Procfile
-.kitchen/
-.kitchen.local.yml
+.kitchen
 
 # SCM #
 #######
@@ -95,3 +94,7 @@ Vagrantfile
 # Travis #
 ##########
 .travis.yml
+
+# Chef Delivery #
+#################
+.delivery
