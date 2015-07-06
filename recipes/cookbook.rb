@@ -25,6 +25,9 @@ template "#{cookbook_dir}/LICENSE" do
   action :create_if_missing
 end
 
+# chefignore
+cookbook_file "#{cookbook_dir}/chefignore"
+
 # Berksfile
 template "#{cookbook_dir}/Berksfile" do
   helpers(ChefDK::Generator::TemplateHelper)
