@@ -37,5 +37,38 @@ describe 'pcb::cookbook' do
     it 'renders the LICENSE file from the correct template source' do
       expect(chef_run).to create_template_if_missing('/var/tmp/pcb/LICENSE').with(source: 'LICENSE.apache2.erb')
     end
+
+    it 'creates the Berksfile with delivery-truck as a dependency from git' do
+      expect(chef_run).to create_template_if_missing('/var/tmp/pcb/Berksfile')
+        .with(variables: { cookbook_parent: nil })
+    end
+  end
+
+  context 'our parent is a cookbook project' do
+    before(:each) do
+      allow(PCB::Helpers).to receive(:cookbook_parent?).and_return(true)
+    end
+
+    let(:chef_run) do
+      ChefSpec::SoloRunner.new(
+        platform: 'ubuntu',
+        version: '14.04'
+      ).converge(described_recipe)
+    end
+
+    it 'creates the metadata.rb with delivery-truck dependency' do
+      expect(chef_run).to create_template_if_missing('/var/tmp/pcb/metadata.rb')
+        .with(variables: { cookbook_parent: true })
+      # expect(chef_run).to render_file('/var/tmp/pcb/metadata.rb')
+      #   .with_content(%r{depends 'delivery-truck'})
+    end
+
+    it 'creates the Berksfile with delivery-truck as a dependency from git' do
+      expect(chef_run).to create_template_if_missing('/var/tmp/pcb/Berksfile')
+        .with(variables: { cookbook_parent: true })
+      expect(chef_run).to render_file('/var/tmp/pcb/Berksfile')
+        .with_content(%r{cookbook 'delivery-truck',\s*git: 'https://github.com/opscode-cookbooks/delivery-truck.git'})
+    end
+
   end
 end

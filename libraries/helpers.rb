@@ -11,4 +11,4 @@ module PCB
       return true if File.exist?('../../metadata.json')
     end
   end
-end
+end unless defined?(PCB::Helpers)

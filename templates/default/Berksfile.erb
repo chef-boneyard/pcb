@@ -2,7 +2,7 @@ source 'https://supermarket.chef.io'
 
 metadata
 
-<% if cookbook_parent -%>
+<% if @cookbook_parent -%>
 cookbook 'delivery-truck',
   git: 'https://github.com/opscode-cookbooks/delivery-truck.git'
   branch: 'master'
