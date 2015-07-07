@@ -8,7 +8,7 @@ directory cookbook_dir
 # metadata.rb
 template "#{cookbook_dir}/metadata.rb" do
   helpers(ChefDK::Generator::TemplateHelper)
-  variables(cookbook_parent: PCB::Helpers.cookbook_parent?)
+  variables cookbook_parent: PCB::Helpers.cookbook_parent?(cookbook_dir)
   action :create_if_missing
 end
 
@@ -31,7 +31,7 @@ cookbook_file "#{cookbook_dir}/chefignore"
 # Berksfile
 template "#{cookbook_dir}/Berksfile" do
   helpers(ChefDK::Generator::TemplateHelper)
-  variables cookbook_parent: PCB::Helpers.cookbook_parent?
+  variables cookbook_parent: PCB::Helpers.cookbook_parent?(cookbook_dir)
   action :create_if_missing
 end
 
@@ -42,7 +42,7 @@ directory "#{cookbook_dir}/recipes"
   template "#{cookbook_dir}/recipes/#{phase}.rb" do
     source 'recipe.rb.erb'
     helpers(ChefDK::Generator::TemplateHelper)
-    variables phase: phase, cookbook_parent: PCB::Helpers.cookbook_parent?
+    variables phase: phase, cookbook_parent: PCB::Helpers.cookbook_parent?(cookbook_dir)
     action :create_if_missing
   end
 end
