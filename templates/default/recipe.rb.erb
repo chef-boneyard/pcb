@@ -4,5 +4,5 @@
 #
 <%= license_description('#') %>
 <% if @cookbook_parent -%>
-include_recipe 'delivery-truck::<%= phase %>'
+include_recipe 'delivery-truck::<%= @phase %>'
 <% end -%>

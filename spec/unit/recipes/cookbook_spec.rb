@@ -64,7 +64,7 @@ describe 'pcb::cookbook' do
       expect(chef_run).to create_template_if_missing('/var/tmp/doppelgangers/metadata.rb')
         .with(variables: { cookbook_parent: true })
       expect(chef_run).to render_file('/var/tmp/doppelgangers/metadata.rb')
-        .with_content(%r{depends 'delivery-truck'})
+        .with_content(/depends 'delivery-truck'/)
     end
 
     it 'creates the Berksfile with delivery-truck as a dependency from git' do
@@ -72,6 +72,15 @@ describe 'pcb::cookbook' do
         .with(variables: { cookbook_parent: true })
       expect(chef_run).to render_file('/var/tmp/doppelgangers/Berksfile')
         .with_content(%r{cookbook 'delivery-truck',\s*git: 'https://github.com/opscode-cookbooks/delivery-truck.git'})
+    end
+
+    %w(default deploy functional lint provision publish quality security smoke syntax unit).each do |phase|
+      it "creates a recipe for #{phase}" do
+        expect(chef_run).to create_template_if_missing("/var/tmp/doppelgangers/recipes/#{phase}.rb")
+          .with(variables: { phase: phase, cookbook_parent: true })
+        expect(chef_run).to render_file("/var/tmp/doppelgangers/recipes/#{phase}.rb")
+          .with_content(/include_recipe 'delivery-truck::#{phase}'/)
+      end
     end
   end
 end
