@@ -1,7 +1,7 @@
 require 'chefspec'
 require 'chef-dk/generator'
 
-ChefSpec::Coverage.start!
+# ChefSpec::Coverage.start!
 
 RSpec.configure do |config|
   config.color = true

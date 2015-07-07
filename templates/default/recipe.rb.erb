@@ -3,6 +3,6 @@
 # Recipe:: <%= recipe_name %>
 #
 <%= license_description('#') %>
-<% if cookbook_parent -%>
-include_recipe 'delivery-truck::<%= phase %>'
+<% if @cookbook_parent -%>
+include_recipe 'delivery-truck::<%= @phase %>'
 <% end -%>
