@@ -3,13 +3,13 @@
 # Recipe:: default
 #
 # Copyright 2015 Chef Software, Inc.
-# 
+#
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
-# 
+#
 #     http://www.apache.org/licenses/LICENSE-2.0
-# 
+#
 # Unless required by applicable law or agreed to in writing, software
 # distributed under the License is distributed on an "AS IS" BASIS,
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -18,6 +18,11 @@
 
 build_cookbook_path = "#{node['delivery']['workspace']['repo']}/#{cookbook_name}"
 
+# Enable audit mode, because it'll be disabled by default. This will
+# fail if the chef client is below 12.1.0, but we're fine here because
+# our delivery builders have ChefDK.
+Chef::Config[:audit_mode] = :enabled
+
 control_group 'Verify Build Cookbook' do
   control 'It wraps delivery-truck' do
     it 'has delivery-truck in the berksfile' do
@@ -25,16 +30,20 @@ control_group 'Verify Build Cookbook' do
     end
 
     it 'has delivery-sugar in the berksfile' do
-
+      expect(file("#{build_cookbook_path}/Berksfile").content).to match(/cookbook 'delivery-sugar'/)
     end
 
     it 'depends on delivery-truck' do
-      expect(file("#{build_cookbook_path}/metadat.rb").content).to match(/depends 'delivery-truck'/)
+      expect(file("#{build_cookbook_path}/metadata.rb").content).to match(/depends 'delivery-truck'/)
     end
 
     # .each an array
-    it 'includes the delivery-truck recipes in each generated recipe' do
-
+    %w(default deploy functional lint provision publish quality security smoke syntax unit).each do |phase|
+      it "includes the delivery-truck recipes in #{phase}" do
+        expect(file("#{build_cookbook_path}/recipes/#{phase}.rb").content).to match(
+          /include_recipe 'delivery-truck::#{phase}'/
+        )
+      end
     end
   end
 end

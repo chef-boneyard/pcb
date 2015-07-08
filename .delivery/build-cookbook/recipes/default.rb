@@ -3,13 +3,13 @@
 # Recipe:: default
 #
 # Copyright 2015 Chef Software, Inc.
-# 
+#
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
-# 
+#
 #     http://www.apache.org/licenses/LICENSE-2.0
-# 
+#
 # Unless required by applicable law or agreed to in writing, software
 # distributed under the License is distributed on an "AS IS" BASIS,
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -19,12 +19,12 @@
 # github key setup
 deploy_key = get_project_secrets['github']
 
-build_user_home = "/var/opt/delivery/workspace"
+build_user_home = '/var/opt/delivery/workspace'
 
 directory "#{build_user_home}/.ssh" do
   owner node['delivery_builder']['build_user']
   group 'root'
-  mode  '0700'
+  mode '0700'
 end
 
 execute "ssh-keyscan -t rsa github.com >> #{build_user_home}/.ssh/known_hosts" do
@@ -34,10 +34,10 @@ end
 deploy_key_path = ::File.join(build_user_home, '.ssh', 'chef-delivery.pem')
 
 file deploy_key_path do
-  content  deploy_key
-  owner    node['delivery_builder']['build_user']
-  group    'root'
-  mode     '0600'
+  content deploy_key
+  owner node['delivery_builder']['build_user']
+  group 'root'
+  mode '0600'
   sensitive true
 end
 
@@ -49,5 +49,5 @@ file "#{build_user_home}/.ssh/config" do
   EOH
   owner node['delivery_builder']['build_user']
   group 'root'
-  mode  '0600'
+  mode '0600'
 end
