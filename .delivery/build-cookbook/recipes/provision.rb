@@ -24,6 +24,9 @@ execute "chef generate cookbook #{cookbook_name}" do
   cwd node['delivery']['workspace']['repo']
 end
 
+# not doing 'delivery init'
+directoy File.join(path, '.delivery')
+
 execute 'git add and commit' do
   cwd path
   command <<-EOF.gsub(/^\s*/, '')
