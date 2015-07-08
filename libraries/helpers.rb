@@ -7,8 +7,9 @@ module PCB
     def self.cookbook_parent?(cookbook_root)
       # we're being generated in project/.delivery/build-cookbook, so
       # look for ../../metadata.json or .rb
-      return true if File.exist?(File.join(cookbook_root, '..', '..', 'metadata.rb'))
-      return true if File.exist?(File.join(cookbook_root, '..', '..', 'metadata.json'))
+      parent_project = File.expand_path(File.join(cookbook_root, '..', '..'))
+      return true if File.exist?(File.join(parent_project, 'metadata.rb'))
+      return true if File.exist?(File.join(parent_project, 'metadata.json'))
     end
   end
 end unless defined?(PCB::Helpers)
