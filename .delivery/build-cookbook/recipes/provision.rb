@@ -25,7 +25,7 @@ execute "chef generate cookbook #{cookbook_name}" do
 end
 
 # not doing 'delivery init'
-directoy File.join(path, '.delivery')
+directory File.join(path, '.delivery')
 
 execute 'git add and commit' do
   cwd path
