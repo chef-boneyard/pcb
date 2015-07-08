@@ -4,9 +4,13 @@
     "name": "build-cookbook",
     "path": ".delivery/build-cookbook"
   },
+  "delivery-truck": {
+    "publish": {
+      "github": "chef-cookbooks/pcb"
+    }
+  },
   "skip_phases": [
     "deploy",
-    "publish",
     "quality",
     "security",
     "smoke"

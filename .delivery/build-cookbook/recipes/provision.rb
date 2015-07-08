@@ -35,7 +35,7 @@ end
 execute 'clone pcb and generate build-cookbook' do
   cwd path
   command <<-EOF.gsub(/^\s*/, '')
-    git clone https://github.com/chef-cookbooks/pcb.git #{cache}/.delivery/cache/generator-cookbooks/pcb
+    git clone git@github.com:#{node['delivery']['config']['delivery-truck']['publish']['github']}.git #{cache}/.delivery/cache/generator-cookbooks/pcb
     chef generate cookbook .delivery/build-cookbook -g #{cache}/.delivery/cache/generator-cookbooks/pcb
   EOF
 end
