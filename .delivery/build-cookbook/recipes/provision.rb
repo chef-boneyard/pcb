@@ -19,12 +19,13 @@
 cache = node['delivery']['workspace']['cache']
 cookbook_name = 'maelstrom'
 path = "#{node['delivery']['workspace']['repo']}/#{cookbook_name}"
+github_repo = node['delivery']['config']['delivery-truck']['publish']['github']
 
 execute "chef generate cookbook #{cookbook_name}" do
   cwd node['delivery']['workspace']['repo']
 end
 
-# not doing 'delivery init'
+# we're not doing `delivery init`, so we need to make the directory
 directory File.join(path, '.delivery')
 
 execute 'git add and commit' do
@@ -35,10 +36,14 @@ execute 'git add and commit' do
   EOF
 end
 
-execute 'clone pcb and generate build-cookbook' do
+git "#{cache}/.delivery/cache/generator-cookbooks/pcb" do
+  repository github_repo
+  checkout_branch 'master'
+  revision 'master'
+  action :sync
+end
+
+execute 'generate build-cookbook' do
   cwd path
-  command <<-EOF.gsub(/^\s*/, '')
-    git clone git@github.com:#{node['delivery']['config']['delivery-truck']['publish']['github']}.git #{cache}/.delivery/cache/generator-cookbooks/pcb
-    chef generate cookbook .delivery/build-cookbook -g #{cache}/.delivery/cache/generator-cookbooks/pcb
-  EOF
+  command "chef generate cookbook .delivery/build-cookbook -g #{cache}/.delivery/cache/generator-cookbooks/pcb"
 end

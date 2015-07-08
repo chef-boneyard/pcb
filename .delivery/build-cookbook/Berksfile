@@ -2,5 +2,11 @@ source 'https://supermarket.chef.io'
 
 metadata
 
-cookbook 'delivery-truck', github: 'opscode-cookbooks/delivery-truck'
-cookbook 'delivery-sugar', github: 'chef-cookbooks/delivery-sugar'
+cookbook 'delivery-truck',
+  git: 'https://github.com/opscode-cookbooks/delivery-truck.git',
+  branch: 'master'
+
+# This is so we know where to get delivery-truck's dependency
+cookbook 'delivery-sugar',
+  git: 'https://github.com/chef-cookbooks/delivery-sugar.git',
+  branch: 'master'
