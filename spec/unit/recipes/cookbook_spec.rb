@@ -34,6 +34,25 @@ describe 'pcb::cookbook' do
       expect { chef_run }.to_not raise_error
     end
 
+    # It may seem we're testing that chef works, but what we're really
+    # doing is ensuring that we have 100% coverage for our build
+    # cookbook's generator recipe.
+    it 'creates the target cookbook directory' do
+      expect(chef_run).to create_directory('/var/tmp/doppelgangers')
+    end
+
+    it 'creates the target cookbook recipes directory' do
+      expect(chef_run).to create_directory('/var/tmp/doppelgangers/recipes')
+    end
+
+    it 'creates a chefignore' do
+      expect(chef_run).to create_cookbook_file('/var/tmp/doppelgangers/chefignore')
+    end
+
+    it 'creates a README.md' do
+      expect(chef_run).to create_template_if_missing('/var/tmp/doppelgangers/README.md')
+    end
+
     # we know that if the generate command does not specify the
     # license option, `all_rights` is used, so let's test for a
     # non-default option like our favorite license, `apache2`. we
