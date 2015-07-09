@@ -36,14 +36,18 @@ execute 'git add and commit' do
   EOF
 end
 
+directory "#{cache}/.delivery/cache/generator-cookbooks/pcb" do
+  recursive true
+end
+
 git "#{cache}/.delivery/cache/generator-cookbooks/pcb" do
-  repository github_repo
+  repository "git@github.com:#{github_repo}.git"
   checkout_branch 'master'
   revision 'master'
   action :sync
 end
 
 execute 'generate build-cookbook' do
-  cwd path
   command "chef generate cookbook .delivery/build-cookbook -g #{cache}/.delivery/cache/generator-cookbooks/pcb"
+  cwd path
 end
