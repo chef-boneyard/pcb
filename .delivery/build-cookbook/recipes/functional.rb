@@ -16,7 +16,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-build_cookbook_path = "#{node['delivery']['workspace']['repo']}/#{cookbook_name}"
+# Our target cookbook name setup in the provision recipe is maelstrom.
+# We need to dance over to the provision directory because that's
+# where we cached the pcb generator cookbook
+build_cookbook_path = File.expand_path(File.join(node['delivery']['workspace']['repo'],
+                                                 '..', '..', 'provision', 'repo', 'maelstrom',
+                                                 '.delivery', 'build-cookbook'))
 
 # Enable audit mode, because it'll be disabled by default. This will
 # fail if the chef client is below 12.1.0, but we're fine here because
@@ -39,7 +44,7 @@ control_group 'Verify Build Cookbook' do
 
     # .each an array
     %w(default deploy functional lint provision publish quality security smoke syntax unit).each do |phase|
-      it "includes the delivery-truck recipes in #{phase}" do
+      it "includes the delivery-truck recipe in #{phase}" do
         expect(file("#{build_cookbook_path}/recipes/#{phase}.rb").content).to match(
           /include_recipe 'delivery-truck::#{phase}'/
         )
