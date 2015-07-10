@@ -17,11 +17,11 @@
 # limitations under the License.
 
 cache = node['delivery']['workspace']['cache']
-cookbook_name = 'maelstrom'
-path = "#{node['delivery']['workspace']['repo']}/#{cookbook_name}"
+target_cookbook_name = 'maelstrom'
+path = "#{node['delivery']['workspace']['repo']}/#{target_cookbook_name}"
 github_repo = node['delivery']['config']['delivery-truck']['publish']['github']
 
-execute "chef generate cookbook #{cookbook_name}" do
+execute "chef generate cookbook #{target_cookbook_name}" do
   cwd node['delivery']['workspace']['repo']
 end
 
@@ -42,7 +42,6 @@ end
 
 git "#{cache}/.delivery/cache/generator-cookbooks/pcb" do
   repository "git@github.com:#{github_repo}.git"
-  checkout_branch 'master'
   revision 'master'
   action :checkout
 end
