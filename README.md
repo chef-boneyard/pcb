@@ -1,9 +1,55 @@
-Inceptionally speaking, this is a cookbook.
+# pcb cookbook
 
-That builds cookbooks.
+The "Pipeline Cookbook" - `pcb` - is, inceptionally speaking, a ChefDK code generator cookbook for creating build cookbooks for use with Chef Delivery pipeline phases.
 
-That are build cookbooks.
+This cookbook also serves as a complete example "cookbook generator cookbook," complete with tests, and its own integration with Chef Delivery.
 
-To build your cookbook.
+This cookbook is shared via GitHub. It is not shared on Supermarket because the primary consumer of it is  delivery-cli's `init` sub-command, which clones the repository to a cached location.
 
-My head hurts.
+# Usage Demo
+
+Set up a project for Chef Delivery. For example purposes, we'll create a new cookbook, and make an initial commit.
+
+```
+chef generate cookbook maelstrom
+cd maelstrom
+git add .
+git commit -m 'A swirling vortex of rain'
+delivery setup --ent ENTERPRISE --org ORGNAME --server delivery.example.com --user USERNAME --for master
+echo '.delivery/cli.toml' >> .gitignore
+delivery token
+delivery init
+```
+
+If the installed delivery-cli does not create the build cookbook, you can do that manually:
+
+```
+git clone https://github.com/chef-cookbooks/pcb.git ~/.delivery/cache/generator-cookbooks/pcb
+chef generate cookbook .delivery/build-cookbook -g ~/.delivery/cache/generator-cookbooks/pcb
+```
+
+If the project is a cookbook like our example, this will generate the `.delivery/build-cookbook` as a wrapper for [delivery-truck](https://github.com/opscode-cookbooks/delivery-truck). If the project is something else, such as a Java or Rails application, the `.delivery/build-cookbook` will be an empty skeleton. Either way, it can then be modified as required to run the project through Chef Delivery's phases.
+
+# License and Author
+
+Based on the [ChefDK code_generator](https://github.com/chef/chef-dk/tree/master/lib/chef-dk/skeletons/code_generator)
+
+Further modifications:
+
+- Author: Joshua Timberman <joshua@chef.io>
+- Author: Jon Anderson <janderson@chef.io>
+- Author: Stephen Lauck <laucks@chef.io>
+
+Copyright:: Copyright (c) 2015, Chef Software, Inc. <legal@chef.io>
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
