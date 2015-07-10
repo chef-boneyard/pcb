@@ -44,7 +44,7 @@ git "#{cache}/.delivery/cache/generator-cookbooks/pcb" do
   repository "git@github.com:#{github_repo}.git"
   checkout_branch 'master'
   revision 'master'
-  action :sync
+  action :checkout
 end
 
 execute 'generate build-cookbook' do

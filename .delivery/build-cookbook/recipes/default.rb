@@ -51,3 +51,9 @@ file "#{build_user_home}/.ssh/config" do
   group 'root'
   mode '0600'
 end
+
+# cleanup the cache directory, otherwise provision will fail
+directory "#{node['delivery']['workspace']['cache']}/.delivery/cache/generator-cookbooks/pcb" do
+  recursive true
+  action :delete
+end
