@@ -46,3 +46,31 @@ directory "#{cookbook_dir}/recipes"
     action :create_if_missing
   end
 end
+
+# Test Kitchen build node
+cookbook_file "#{cookbook_dir}/.kitchen.yml"
+
+directory "#{cookbook_dir}/data_bags/keys" do
+  recursive true
+end
+
+file "#{cookbook_dir}/data_bags/keys/delivery_builder_keys.json" do
+  content '{"id": "delivery_builder_keys"}'
+end
+
+directory "#{cookbook_dir}/secrets"
+
+file "#{cookbook_dir}/secrets/fakey-mcfakerton"
+
+directory "#{cookbook_dir}/test/fixtures/cookbooks/test/recipes" do
+  recursive true
+end
+
+file "#{cookbook_dir}/test/fixtures/cookbooks/test/metadata.rb" do
+  content %(name 'test'
+version '0.1.0')
+end
+
+cookbook_file "#{cookbook_dir}/test/fixtures/cookbooks/test/recipes/default.rb" do
+  source 'test-fixture-recipe.rb'
+end
