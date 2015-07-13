@@ -16,37 +16,4 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-cache = node['delivery']['workspace']['cache']
-target_cookbook_name = 'maelstrom'
-path = "#{node['delivery']['workspace']['repo']}/#{target_cookbook_name}"
-github_repo = node['delivery']['config']['delivery-truck']['publish']['github']
-
-execute "chef generate cookbook #{target_cookbook_name}" do
-  cwd node['delivery']['workspace']['repo']
-end
-
-# we're not doing `delivery init`, so we need to make the directory
-directory File.join(path, '.delivery')
-
-execute 'git add and commit' do
-  cwd path
-  command <<-EOF.gsub(/^\s*/, '')
-    git add .
-    git commit -m 'a swirling vortex of terror'
-  EOF
-end
-
-directory "#{cache}/.delivery/cache/generator-cookbooks/pcb" do
-  recursive true
-end
-
-git "#{cache}/.delivery/cache/generator-cookbooks/pcb" do
-  repository "git@github.com:#{github_repo}.git"
-  revision 'master'
-  action :checkout
-end
-
-execute 'generate build-cookbook' do
-  command "chef generate cookbook .delivery/build-cookbook -g #{cache}/.delivery/cache/generator-cookbooks/pcb"
-  cwd path
-end
+include_recipe 'delivery-truck::provision'
