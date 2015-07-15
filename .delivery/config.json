@@ -4,6 +4,7 @@
     "name": "build-cookbook",
     "path": ".delivery/build-cookbook"
   },
+  "install_delivery_cli": false,
   "delivery-truck": {
     "publish": {
       "github": "chef-cookbooks/pcb"

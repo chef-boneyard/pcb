@@ -65,6 +65,34 @@ describe 'pcb::cookbook' do
       expect(chef_run).to create_template_if_missing('/var/tmp/doppelgangers/Berksfile')
         .with(variables: { cookbook_parent: nil })
     end
+
+    it 'creates a .kitchen.yml file' do
+      expect(chef_run).to create_cookbook_file('/var/tmp/doppelgangers/.kitchen.yml')
+    end
+
+    it 'includes delivery_build in the Berksfile' do
+      expect(chef_run).to render_file('/var/tmp/doppelgangers/Berksfile')
+        .with_content('cookbook \'delivery_build\'')
+    end
+
+    it 'creates dummy delivery-builder data bag keys' do
+      expect(chef_run).to create_directory('/var/tmp/doppelgangers/data_bags/keys')
+        .with(recursive: true)
+      expect(chef_run).to create_file('/var/tmp/doppelgangers/data_bags/keys/delivery_builder_keys.json')
+    end
+
+    it 'creates a dummy encrypted data bag secret file' do
+      expect(chef_run).to create_directory('/var/tmp/doppelgangers/secrets')
+      expect(chef_run).to create_file('/var/tmp/doppelgangers/secrets/fakey-mcfakerton')
+    end
+
+    it 'creates a test cookbook for running verify phases' do
+      expect(chef_run).to create_directory('/var/tmp/doppelgangers/test/fixtures/cookbooks/test/recipes')
+        .with(recursive: true)
+      expect(chef_run).to create_file('/var/tmp/doppelgangers/test/fixtures/cookbooks/test/metadata.rb')
+      expect(chef_run).to render_file('/var/tmp/doppelgangers/test/fixtures/cookbooks/test/recipes/default.rb')
+        .with_content(/delivery job verify/)
+    end
   end
 
   context 'our parent is a cookbook project' do

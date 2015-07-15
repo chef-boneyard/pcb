@@ -6,6 +6,13 @@ This cookbook also serves as a complete example "cookbook generator cookbook," c
 
 This cookbook is shared via GitHub. It is not shared on Supermarket because the primary consumer of it is  delivery-cli's `init` sub-command, which clones the repository to a cached location.
 
+# Requirements
+
+- ChefDK 0.6.2+
+- Delivery CLI 2015-07-15T15:38:10Z (954e60c)
+
+Due to the nature of Chef Delivery (continuous delivery), we recommend that users have the latest version of ChefDK and delivery-cli installed on their local systems.
+
 # Usage Demo
 
 Set up a project for Chef Delivery. For example purposes, we'll create a new cookbook, and make an initial commit.
