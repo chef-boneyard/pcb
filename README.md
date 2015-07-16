@@ -13,6 +13,13 @@ This cookbook is shared via GitHub. It is not shared on Supermarket because the 
 
 Due to the nature of Chef Delivery (continuous delivery), we recommend that users have the latest version of ChefDK and delivery-cli installed on their local systems.
 
+In order to use Test Kitchen to run verification on the local system, the following are also required:
+
+- Vagrant
+- Virtualbox or VMware Fusion
+
+It is left as an exercise to the reader to make sure those are configured for using Test Kitchen. The generated `.kitchen.yml` can be modified to use other provisioners, too.
+
 # Usage Demo
 
 Set up a project for Chef Delivery. For example purposes, we'll create a new cookbook, and make an initial commit.
