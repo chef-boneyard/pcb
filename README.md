@@ -44,6 +44,14 @@ chef generate cookbook .delivery/build-cookbook -g ~/.delivery/cache/generator-c
 
 If the project is a cookbook like our example, this will generate the `.delivery/build-cookbook` as a wrapper for [delivery-truck](https://github.com/opscode-cookbooks/delivery-truck). If the project is something else, such as a Java or Rails application, the `.delivery/build-cookbook` will be an empty skeleton. Either way, it can then be modified as required to run the project through Chef Delivery's phases.
 
+Once this is complete, edit your `.delivery/config.json` to point at the generated build cookbook:
+```
+  "build_cookbook": {
+    "name": "build-cookbook",
+    "path": ".delivery/build-cookbook"
+  },
+```
+
 # License and Author
 
 Based on the [ChefDK code_generator](https://github.com/chef/chef-dk/tree/master/lib/chef-dk/skeletons/code_generator)
