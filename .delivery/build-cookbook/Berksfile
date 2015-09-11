@@ -3,7 +3,7 @@ source 'https://supermarket.chef.io'
 metadata
 
 cookbook 'delivery-truck',
-  git: 'https://github.com/opscode-cookbooks/delivery-truck.git',
+  git: 'https://github.com/chef-cookbooks/delivery-truck.git',
   branch: 'master'
 
 # This is so we know where to get delivery-truck's dependency

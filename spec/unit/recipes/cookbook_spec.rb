@@ -118,7 +118,7 @@ describe 'pcb::cookbook' do
       expect(chef_run).to create_template_if_missing('/var/tmp/doppelgangers/Berksfile')
         .with(variables: { cookbook_parent: true })
       expect(chef_run).to render_file('/var/tmp/doppelgangers/Berksfile')
-        .with_content(%r{cookbook 'delivery-truck',\s*git: 'https://github.com/opscode-cookbooks/delivery-truck.git'})
+        .with_content(%r{cookbook 'delivery-truck',\s*git: 'https://github.com/chef-cookbooks/delivery-truck.git'})
     end
 
     %w(default deploy functional lint provision publish quality security smoke syntax unit).each do |phase|

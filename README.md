@@ -42,7 +42,7 @@ git clone https://github.com/chef-cookbooks/pcb.git ~/.delivery/cache/generator-
 chef generate cookbook .delivery/build-cookbook -g ~/.delivery/cache/generator-cookbooks/pcb
 ```
 
-If the project is a cookbook like our example, this will generate the `.delivery/build-cookbook` as a wrapper for [delivery-truck](https://github.com/opscode-cookbooks/delivery-truck). If the project is something else, such as a Java or Rails application, the `.delivery/build-cookbook` will be an empty skeleton. Either way, it can then be modified as required to run the project through Chef Delivery's phases.
+If the project is a cookbook like our example, this will generate the `.delivery/build-cookbook` as a wrapper for [delivery-truck](https://github.com/chef-cookbooks/delivery-truck). If the project is something else, such as a Java or Rails application, the `.delivery/build-cookbook` will be an empty skeleton. Either way, it can then be modified as required to run the project through Chef Delivery's phases.
 
 # License and Author
 
