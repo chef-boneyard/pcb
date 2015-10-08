@@ -4,7 +4,7 @@ metadata
 <% if @cookbook_parent -%>
 
 cookbook 'delivery-truck',
-  git: 'https://github.com/opscode-cookbooks/delivery-truck.git',
+  git: 'https://github.com/chef-cookbooks/delivery-truck.git',
   branch: 'master'
 
 # This is so we know where to get delivery-truck's dependency
@@ -15,5 +15,6 @@ cookbook 'delivery-sugar',
 
 group :delivery do
   cookbook 'delivery_build', git: 'https://github.com/chef-cookbooks/delivery_build'
+  cookbook 'delivery-base', git: 'https://github.com/chef-cookbooks/delivery-base'
   cookbook 'test', path: './test/fixtures/cookbooks/test'
 end
