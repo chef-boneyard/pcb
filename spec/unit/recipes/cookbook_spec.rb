@@ -126,6 +126,8 @@ describe 'pcb::cookbook' do
         expect(chef_run).to create_template_if_missing("/var/tmp/doppelgangers/recipes/#{phase}.rb")
           .with(variables: { phase: phase, cookbook_parent: true })
         expect(chef_run).to render_file("/var/tmp/doppelgangers/recipes/#{phase}.rb")
+          .with_content(/# Recipe:: #{phase}/)
+        expect(chef_run).to render_file("/var/tmp/doppelgangers/recipes/#{phase}.rb")
           .with_content(/include_recipe 'delivery-truck::#{phase}'/)
       end
     end
